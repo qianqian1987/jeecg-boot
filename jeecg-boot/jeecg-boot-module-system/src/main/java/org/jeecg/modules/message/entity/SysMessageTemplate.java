@@ -20,7 +20,11 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("sys_sms_template")
 public class SysMessageTemplate extends JeecgEntity{
-	/**模板CODE*/
+	/**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
+  /**模板CODE*/
 	@Excel(name = "模板CODE", width = 15)
 	private java.lang.String templateCode;
 	/**模板标题*/

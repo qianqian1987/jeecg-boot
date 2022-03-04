@@ -1,8 +1,7 @@
 package org.jeecg;
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.Context;
-import org.apache.tomcat.util.scan.StandardJarScanner;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import org.jeecg.common.util.oConvertUtils;
 import org.springframework.boot.SpringApplication;
 //import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -10,14 +9,10 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import lombok.extern.slf4j.Slf4j;
 
 /**
 * 单体启动类（采用此类启动为单体模式）

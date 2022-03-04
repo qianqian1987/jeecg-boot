@@ -1,33 +1,46 @@
 package org.jeecg.modules.system.controller;
 
 
-import cn.hutool.core.util.RandomUtil;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.PermissionData;
 import org.jeecg.common.constant.CommonConstant;
-import org.jeecg.common.system.api.ISysBaseAPI;
-import org.jeecg.modules.base.service.BaseCommonService;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.util.JwtUtil;
 import org.jeecg.common.system.vo.LoginUser;
-import org.jeecg.common.util.*;
-import org.jeecg.modules.system.entity.*;
+import org.jeecg.common.util.ImportExcelUtil;
+import org.jeecg.common.util.PasswordUtil;
+import org.jeecg.common.util.RedisUtil;
+import org.jeecg.common.util.oConvertUtils;
+import org.jeecg.modules.base.service.BaseCommonService;
+import org.jeecg.modules.system.entity.SysDepart;
+import org.jeecg.modules.system.entity.SysDepartRole;
+import org.jeecg.modules.system.entity.SysDepartRoleUser;
+import org.jeecg.modules.system.entity.SysUser;
+import org.jeecg.modules.system.entity.SysUserDepart;
+import org.jeecg.modules.system.entity.SysUserRole;
 import org.jeecg.modules.system.model.DepartIdModel;
 import org.jeecg.modules.system.model.SysUserSysDepartModel;
-import org.jeecg.modules.system.service.*;
+import org.jeecg.modules.system.service.ISysDepartRoleService;
+import org.jeecg.modules.system.service.ISysDepartRoleUserService;
+import org.jeecg.modules.system.service.ISysDepartService;
+import org.jeecg.modules.system.service.ISysUserDepartService;
+import org.jeecg.modules.system.service.ISysUserRoleService;
+import org.jeecg.modules.system.service.ISysUserService;
 import org.jeecg.modules.system.vo.SysDepartUsersVO;
 import org.jeecg.modules.system.vo.SysUserRoleVO;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
@@ -37,17 +50,26 @@ import org.jeecgframework.poi.excel.entity.ImportParams;
 import org.jeecgframework.poi.excel.view.JeecgEntityExcelView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collectors;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import cn.hutool.core.util.RandomUtil;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>
@@ -61,8 +83,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/sys/user")
 public class SysUserController {
-	@Autowired
-	private ISysBaseAPI sysBaseAPI;
 	
 	@Autowired
 	private ISysUserService sysUserService;
@@ -75,9 +95,6 @@ public class SysUserController {
 
 	@Autowired
 	private ISysUserDepartService sysUserDepartService;
-
-	@Autowired
-	private ISysUserRoleService userRoleService;
 
     @Autowired
     private ISysDepartRoleUserService departRoleUserService;
@@ -221,7 +238,7 @@ public class SysUserController {
 	public Result<?> delete(@RequestParam(name="id",required=true) String id) {
 		baseCommonService.addLog("删除用户，id： " +id ,CommonConstant.LOG_TYPE_2, 3);
 		this.sysUserService.deleteUser(id);
-		return Result.ok("删除用户成功");
+		return new Result().success("删除用户成功");
 	}
 
 	/**
@@ -232,7 +249,7 @@ public class SysUserController {
 	public Result<?> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
 		baseCommonService.addLog("批量删除用户， ids： " +ids ,CommonConstant.LOG_TYPE_2, 3);
 		this.sysUserService.deleteBatchUsers(ids);
-		return Result.ok("批量删除用户成功");
+		return new Result().success("批量删除用户成功");
 	}
 
 	/**
@@ -738,7 +755,7 @@ public class SysUserController {
             SysUser userParams
     ) {
         IPage<SysUserSysDepartModel> pageList = sysUserService.queryUserByOrgCode(orgCode, userParams, new Page(pageNo, pageSize));
-        return Result.ok(pageList);
+        return Result.OK(pageList);
     }
 
     /**
@@ -784,7 +801,7 @@ public class SysUserController {
 
         IPage<JSONObject> result = new Page<>(pageNo, pageSize, pageList.getTotal());
         result.setRecords(resultJson.toJavaList(JSONObject.class));
-        return Result.ok(result);
+        return Result.OK(result);
     }
 
     /**
@@ -1111,7 +1128,7 @@ public class SysUserController {
 
 			log.debug(" ------ 通过令牌获取部分用户信息，已获取的用户信息： " + map);
 
-			return Result.ok(map);
+			return Result.OK(map);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return Result.error(500, "查询失败:" + e.getMessage());
@@ -1149,7 +1166,7 @@ public class SysUserController {
             }
 			Page<SysUser> page = new Page<>(pageNo, pageSize);
 			IPage<SysUser> res = this.sysUserService.page(page, query);
-			return Result.ok(res);
+			return Result.OK(res);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return Result.error(500, "查询失败:" + e.getMessage());
@@ -1173,7 +1190,7 @@ public class SysUserController {
             Map<String, String> useDepNames = sysUserService.getDepNamesByUserIds(userIds);
             logicDeletedUserList.forEach(item -> item.setOrgCode(useDepNames.get(item.getId())));
         }
-        return Result.ok(logicDeletedUserList);
+        return Result.OK(logicDeletedUserList);
     }
 
     /**
@@ -1191,7 +1208,7 @@ public class SysUserController {
             updateUser.setUpdateTime(new Date());
             sysUserService.revertLogicDeleted(Arrays.asList(userIds.split(",")), updateUser);
         }
-        return Result.ok("还原成功");
+        return new Result().success("还原成功");
     }
 
     /**
@@ -1206,7 +1223,7 @@ public class SysUserController {
         if (StringUtils.isNotBlank(userIds)) {
             sysUserService.removeLogicDeleted(Arrays.asList(userIds.split(",")));
         }
-        return Result.ok("删除成功");
+        return new Result().success("删除成功");
     }
 
 
@@ -1311,7 +1328,7 @@ public class SysUserController {
                 map.put("children",childrenUser);
             }
         }
-        return Result.ok(map);
+        return Result.OK(map);
     }
     /**
      * 移动端查询部门用户信息
@@ -1393,7 +1410,7 @@ public class SysUserController {
         }
         user.setPhone(phone);
         sysUserService.updateById(user);
-        return Result.ok("手机号设置成功!");
+        return new Result().success("手机号设置成功!");
     }
 
 

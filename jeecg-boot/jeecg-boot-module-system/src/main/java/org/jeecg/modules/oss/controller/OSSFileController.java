@@ -1,21 +1,22 @@
 package org.jeecg.modules.oss.controller;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.oss.entity.OSSFile;
 import org.jeecg.modules.oss.service.IOSSFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -46,8 +47,8 @@ public class OSSFileController {
 	@ResponseBody
 	@PostMapping("/upload")
 	//@RequiresRoles("admin")
-	public Result upload(@RequestParam("file") MultipartFile multipartFile) {
-		Result result = new Result();
+	public Result<String> upload(@RequestParam("file") MultipartFile multipartFile) {
+		Result<String> result = new Result<String>();
 		try {
 			ossFileService.upload(multipartFile);
 			result.success("上传成功！");
