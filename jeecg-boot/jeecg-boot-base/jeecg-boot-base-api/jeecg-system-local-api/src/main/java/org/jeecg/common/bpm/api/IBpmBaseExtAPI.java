@@ -1,12 +1,6 @@
 package org.jeecg.common.bpm.api;
 
-import java.util.List;
-import java.util.Map;
-
 import org.jeecg.common.api.vo.Result;
-import org.jeecg.common.system.vo.DictModel;
-
-import com.alibaba.fastjson.JSONObject;
 
 /**
  * 流程接口

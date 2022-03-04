@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jeecgframework.boot</groupId>
@@ -22,12 +23,12 @@
         <fastjson.version>1.2.78</fastjson.version>
 		<knife4j-spring-boot-starter.version>2.0.9</knife4j-spring-boot-starter.version>
 		<knife4j-spring-ui.version>2.0.9</knife4j-spring-ui.version>
-		<!-- æ•°æ®åº“é©±åŠ¨ -->
+		<!-- Êý¾Ý¿âÇý¶¯ -->
 		<postgresql.version>42.2.6</postgresql.version>
 		<ojdbc6.version>11.2.0.3</ojdbc6.version>
 		<sqljdbc4.version>4.0</sqljdbc4.version>
 		<mysql-connector-java.version>8.0.27</mysql-connector-java.version>
-		<!-- åŠ¨æ€æ•°æ®æº-->
+		<!-- ¶¯Ì¬Êý¾ÝÔ´-->
 		<dynamic-datasource-spring-boot-starter.version>3.2.0</dynamic-datasource-spring-boot-starter.version>
 		<hutool.version>5.3.8</hutool.version>
 		<redisson.version>3.16.1</redisson.version>
@@ -47,7 +48,7 @@
 		<justauth-spring-boot-starter.version>1.3.4</justauth-spring-boot-starter.version>
 		<dom4j.version>1.6.1</dom4j.version>
 		<qiniu-java-sdk.version>7.4.0</qiniu-java-sdk.version>
-		<!-- Log4j2çˆ†é›·æ¼æ´ž -->
+		<!-- Log4j2±¬À×Â©¶´ -->
 		<log4j2.version>2.17.0</log4j2.version>
 		<logback.version>1.2.9</logback.version>
 	</properties>
@@ -56,10 +57,11 @@
         <module>jeecg-boot-base</module>
         <module>jeecg-boot-module-demo</module>
         <module>jeecg-boot-module-system</module>
-        <!--éœ€è¦å¾®æœåŠ¡ï¼Œè¯·æ‰“å¼€
+        <!--ÐèÒªÎ¢·þÎñ£¬Çë´ò¿ª
         <module>jeecg-boot-starter</module>
         <module>jeecg-cloud-module</module>-->
-	</modules>
+	  <module>jeecg-module-platform</module>
+  </modules>
 
 	<distributionManagement>
 	  	<repository>
@@ -130,7 +132,7 @@
 				<scope>import</scope>
 			</dependency>
 
-			<!-- system æ¨¡å—-->
+			<!-- system Ä£¿é-->
 			<dependency>
 				<groupId>org.jeecgframework.boot</groupId>
 				<artifactId>jeecg-boot-module-system</artifactId>
@@ -149,41 +151,41 @@
 				<artifactId>jeecg-boot-base-core</artifactId>
 				<version>${jeecgboot.version}</version>
 			</dependency>
-			<!-- system å•ä½“ api -->
+			<!-- system µ¥Ìå api -->
 			<dependency>
 				<groupId>org.jeecgframework.boot</groupId>
 				<artifactId>jeecg-system-local-api</artifactId>
 				<version>${jeecgboot.version}</version>
 			</dependency>
-			<!-- system å¾®æœåŠ¡ api -->
+			<!-- system Î¢·þÎñ api -->
 			<dependency>
 				<groupId>org.jeecgframework.boot</groupId>
 				<artifactId>jeecg-system-cloud-api</artifactId>
 				<version>${jeecgboot.version}</version>
 			</dependency>
 
-            <!--å¾®æœåŠ¡æ¨¡å—-->
+            <!--Î¢·þÎñÄ£¿é-->
             <dependency>
                 <groupId>org.jeecgframework.boot</groupId>
                 <artifactId>jeecg-boot-starter-cloud</artifactId>
                 <version>${jeecgboot.version}</version>
             </dependency>
 
-			<!--xxl-jobå®šæ—¶ä»»åŠ¡-->
+			<!--xxl-job¶¨Ê±ÈÎÎñ-->
 			<dependency>
 				<groupId>org.jeecgframework.boot</groupId>
 				<artifactId>jeecg-boot-starter-job</artifactId>
 				<version>${jeecgboot.version}</version>
 			</dependency>
 
-			<!--redisåˆ†å¸ƒå¼é”-->
+			<!--redis·Ö²¼Ê½Ëø-->
 			<dependency>
 				<groupId>org.jeecgframework.boot</groupId>
 				<artifactId>jeecg-boot-starter-lock</artifactId>
 				<version>${jeecgboot.version}</version>
 			</dependency>
 
-			<!--rabbitmqæ¶ˆæ¯é˜Ÿåˆ—-->
+			<!--rabbitmqÏûÏ¢¶ÓÁÐ-->
 			<dependency>
 				<groupId>org.jeecgframework.boot</groupId>
 				<artifactId>jeecg-boot-starter-rabbitmq</artifactId>
@@ -191,7 +193,7 @@
 			</dependency>
 
 
-			<!-- ä¸ƒç‰›äº‘SDK -->
+			<!-- ÆßÅ£ÔÆSDK -->
 			<dependency>
 				<groupId>com.qiniu</groupId>
 				<artifactId>qiniu-java-sdk</artifactId>
@@ -216,14 +218,14 @@
 				<version>${redisson.version}</version>
 			</dependency>
 
-			<!-- guavaå·¥å…·ç±» -->
+			<!-- guava¹¤¾ßÀà -->
 			<dependency>
 				<groupId>com.google.guava</groupId>
 				<artifactId>guava</artifactId>
 				<version>${guava.version}</version>
 			</dependency>
 
-			<!-- hutoolå·¥å…·ç±»-->
+			<!-- hutool¹¤¾ßÀà-->
 			<dependency>
 				<groupId>cn.hutool</groupId>
 				<artifactId>hutool-core</artifactId>
@@ -254,7 +256,7 @@
 				</exclusions>
 			</dependency>
 
-			<!-- justauthç¬¬ä¸‰æ–¹ç™»å½•  -->
+			<!-- justauthµÚÈý·½µÇÂ¼  -->
 			<dependency>
 				<groupId>com.xkcoding.justauth</groupId>
 				<artifactId>justauth-spring-boot-starter</artifactId>
@@ -300,7 +302,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			 æŒ‡å®šJDKç¼–è¯‘ç‰ˆæœ¬ -->
+			 Ö¸¶¨JDK±àÒë°æ±¾ -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -310,7 +312,7 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
-            <!-- æ‰“åŒ…è·³è¿‡æµ‹è¯• -->
+            <!-- ´ò°üÌø¹ý²âÊÔ -->
             <plugin>
 		        <groupId>org.apache.maven.plugins</groupId>
 		        <artifactId>maven-surefire-plugin</artifactId>
@@ -318,7 +320,7 @@
 		          <skipTests>true</skipTests>
 		        </configuration>
 	        </plugin>
-	         <!-- é¿å…fontæ–‡ä»¶çš„äºŒè¿›åˆ¶æ–‡ä»¶æ ¼å¼åŽ‹ç¼©ç ´å -->
+	         <!-- ±ÜÃâfontÎÄ¼þµÄ¶þ½øÖÆÎÄ¼þ¸ñÊ½Ñ¹ËõÆÆ»µ -->
 	         <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -348,75 +350,75 @@
 			</resource>
 		</resources>
 	</build>
-    <!-- çŽ¯å¢ƒ -->
+    <!-- »·¾³ -->
     <profiles>
-        <!-- å¼€å‘ -->
+        <!-- ¿ª·¢ -->
         <profile>
             <id>dev</id>
             <activation>
-                <!--é»˜è®¤æ¿€æ´»é…ç½®-->
+                <!--Ä¬ÈÏ¼¤»îÅäÖÃ-->
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <!--å½“å‰çŽ¯å¢ƒ-->
+                <!--µ±Ç°»·¾³-->
                 <profile.name>dev</profile.name>
-                <!--é…ç½®æ–‡ä»¶å‰ç¼€-->
+                <!--ÅäÖÃÎÄ¼þÇ°×º-->
                 <prefix.name>jeecg</prefix.name>
-                <!--Nacosé…ç½®ä¸­å¿ƒåœ°å€-->
+                <!--NacosÅäÖÃÖÐÐÄµØÖ·-->
                 <config.server-addr>jeecg-boot-nacos:8848</config.server-addr>
-                <!--Nacosé…ç½®ä¸­å¿ƒå‘½åç©ºé—´,ç”¨äºŽæ”¯æŒå¤šçŽ¯å¢ƒ.è¿™é‡Œå¿…é¡»ä½¿ç”¨IDï¼Œä¸èƒ½ä½¿ç”¨åç§°,é»˜è®¤ä¸ºç©º-->
-                <config.namespace></config.namespace>
-				<!--Nacosç”¨æˆ·å-->
+                <!--NacosÅäÖÃÖÐÐÄÃüÃû¿Õ¼ä,ÓÃÓÚÖ§³Ö¶à»·¾³.ÕâÀï±ØÐëÊ¹ÓÃID£¬²»ÄÜÊ¹ÓÃÃû³Æ,Ä¬ÈÏÎª¿Õ-->
+                <config.namespace/>
+				<!--NacosÓÃ»§Ãû-->
 				<config.username>nacos</config.username>
-				<!--Nacoså¯†ç -->
+				<!--NacosÃÜÂë-->
 				<config.password>nacos</config.password>
-                <!--Nacosé…ç½®åˆ†ç»„åç§°-->
+                <!--NacosÅäÖÃ·Ö×éÃû³Æ-->
                 <config.group>DEFAULT_GROUP</config.group>
-                <!--NacosæœåŠ¡å‘çŽ°åœ°å€-->
+                <!--Nacos·þÎñ·¢ÏÖµØÖ·-->
                 <discovery.server-addr>jeecg-boot-nacos:8848</discovery.server-addr>
             </properties>
         </profile>
-        <!-- æµ‹è¯• -->
+        <!-- ²âÊÔ -->
         <profile>
             <id>test</id>
             <properties>
-                <!--å½“å‰çŽ¯å¢ƒ-->
+                <!--µ±Ç°»·¾³-->
                 <profile.name>test</profile.name>
-                <!--é…ç½®æ–‡ä»¶å‰ç¼€-->
+                <!--ÅäÖÃÎÄ¼þÇ°×º-->
                 <prefix.name>jeecg</prefix.name>
-                <!--Nacosé…ç½®ä¸­å¿ƒåœ°å€-->
+                <!--NacosÅäÖÃÖÐÐÄµØÖ·-->
                 <config.server-addr>jeecg-boot-nacos:8848</config.server-addr>
-                <!--Nacosé…ç½®ä¸­å¿ƒå‘½åç©ºé—´,ç”¨äºŽæ”¯æŒå¤šçŽ¯å¢ƒ.è¿™é‡Œå¿…é¡»ä½¿ç”¨IDï¼Œä¸èƒ½ä½¿ç”¨åç§°,é»˜è®¤ä¸ºç©º-->
-                <config.namespace></config.namespace>
-				<!--Nacosç”¨æˆ·å-->
+                <!--NacosÅäÖÃÖÐÐÄÃüÃû¿Õ¼ä,ÓÃÓÚÖ§³Ö¶à»·¾³.ÕâÀï±ØÐëÊ¹ÓÃID£¬²»ÄÜÊ¹ÓÃÃû³Æ,Ä¬ÈÏÎª¿Õ-->
+                <config.namespace/>
+				<!--NacosÓÃ»§Ãû-->
 				<config.username>nacos</config.username>
-				<!--Nacoså¯†ç -->
+				<!--NacosÃÜÂë-->
 				<config.password>nacos</config.password>
-                <!--Nacosé…ç½®åˆ†ç»„åç§°-->
+                <!--NacosÅäÖÃ·Ö×éÃû³Æ-->
                 <config.group>DEFAULT_GROUP</config.group>
-                <!--NacosæœåŠ¡å‘çŽ°åœ°å€-->
+                <!--Nacos·þÎñ·¢ÏÖµØÖ·-->
                 <discovery.server-addr>jeecg-boot-nacos:8848</discovery.server-addr>
             </properties>
         </profile>
-        <!-- ç”Ÿäº§ -->
+        <!-- Éú²ú -->
         <profile>
             <id>prod</id>
             <properties>
-                <!--å½“å‰çŽ¯å¢ƒ,ç”Ÿäº§çŽ¯å¢ƒä¸ºç©º-->
+                <!--µ±Ç°»·¾³,Éú²ú»·¾³Îª¿Õ-->
                 <profile.name>prod</profile.name>
-                <!--é…ç½®æ–‡ä»¶å‰ç¼€-->
+                <!--ÅäÖÃÎÄ¼þÇ°×º-->
                 <prefix.name>jeecg</prefix.name>
-                <!--Nacosé…ç½®ä¸­å¿ƒåœ°å€-->
+                <!--NacosÅäÖÃÖÐÐÄµØÖ·-->
                 <config.server-addr>jeecg-boot-nacos:8848</config.server-addr>
-                <!--Nacosé…ç½®ä¸­å¿ƒå‘½åç©ºé—´,ç”¨äºŽæ”¯æŒå¤šçŽ¯å¢ƒ.è¿™é‡Œå¿…é¡»ä½¿ç”¨IDï¼Œä¸èƒ½ä½¿ç”¨åç§°,é»˜è®¤ä¸ºç©º-->
-                <config.namespace></config.namespace>
-				<!--Nacosç”¨æˆ·å-->
+                <!--NacosÅäÖÃÖÐÐÄÃüÃû¿Õ¼ä,ÓÃÓÚÖ§³Ö¶à»·¾³.ÕâÀï±ØÐëÊ¹ÓÃID£¬²»ÄÜÊ¹ÓÃÃû³Æ,Ä¬ÈÏÎª¿Õ-->
+                <config.namespace/>
+				<!--NacosÓÃ»§Ãû-->
 				<config.username>nacos</config.username>
-				<!--Nacoså¯†ç -->
+				<!--NacosÃÜÂë-->
 				<config.password>nacos</config.password>
-                <!--Nacosé…ç½®åˆ†ç»„åç§°-->
+                <!--NacosÅäÖÃ·Ö×éÃû³Æ-->
                 <config.group>DEFAULT_GROUP</config.group>
-                <!--NacosæœåŠ¡å‘çŽ°åœ°å€-->
+                <!--Nacos·þÎñ·¢ÏÖµØÖ·-->
                 <discovery.server-addr>jeecg-boot-nacos:8848</discovery.server-addr>
             </properties>
         </profile>

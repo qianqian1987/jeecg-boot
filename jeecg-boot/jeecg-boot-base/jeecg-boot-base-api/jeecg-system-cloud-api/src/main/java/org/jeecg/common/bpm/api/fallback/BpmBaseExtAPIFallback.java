@@ -1,15 +1,7 @@
 package org.jeecg.common.bpm.api.fallback;
 
-import java.util.List;
-import java.util.Map;
-
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.bpm.api.IBpmBaseExtAPI;
-import org.jeecg.common.online.api.IOnlineBaseExtAPI;
-import org.jeecg.common.system.vo.DictModel;
-
-import com.alibaba.fastjson.JSONObject;
-
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
